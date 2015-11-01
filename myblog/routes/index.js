@@ -181,7 +181,7 @@ router.post('/login', function(req, res, next) {
 
 router.get('/About', function(req, res, next) {
 	var data={
-		title: '登录入口'
+		title: '关于我'
 	};
 	res.render('about', { data: data });
 })
