@@ -11,6 +11,7 @@ module.exports={
 			var sql='insert into t_article(title,content,type,time,clicks) values(?, ?, ?, ?, ?)';
 			connection.query(sql, [params.title,params.content,params.type,new Date(),0], function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			})
 		})
 	},
@@ -19,6 +20,7 @@ module.exports={
 			var sql='select id,title,type,content,clicks,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article where id=?';
 			connection.query(sql, [params.id], function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			})
 		})
 	},
@@ -27,6 +29,7 @@ module.exports={
 			var sql='update t_article set clicks=clicks+1 where id=?';
 			connection.query(sql, [params.id], function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			})
 		})
 	},
@@ -39,6 +42,7 @@ module.exports={
 			}
 			connection.query(sql, [pageSize,params.type], function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			})
 		})
 	},
@@ -48,6 +52,7 @@ module.exports={
 			var sql='select id,title,type,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article order by time desc limit ?, ?';
 			connection.query(sql, [start,pageSize], function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			})
 		})
 	},
@@ -56,6 +61,7 @@ module.exports={
 			var sql='select id,title,clicks from t_article order by clicks desc limit ?, ?';
 			connection.query(sql, [0,5], function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			})
 		})
 	},
@@ -64,6 +70,7 @@ module.exports={
 			var sql='select url,name from t_links limit ?, ?';
 			connection.query(sql, [0,5], function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			})
 		})
 	},
@@ -72,6 +79,7 @@ module.exports={
 			var sql='select id,title,type,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article where title like "'+params.search+'"';
 			connection.query(sql,function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			});
 		});
 	},
@@ -86,6 +94,7 @@ module.exports={
 			}
 			connection.query(sql, [params.type], function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			});
 		});
 	},
@@ -94,6 +103,7 @@ module.exports={
 			var sql='select id,name,url from t_type';
 			connection.query(sql, function(err,rows,fields){
 				callback && callback(err,rows);
+				connection.release();
 			});
 		});
 	}
