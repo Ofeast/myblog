@@ -81,8 +81,10 @@ function createPageCount(pageCount){
 var flag=false; 
 addWheel(document,function(down){
 	var scrollTop=document.body.scrollTop || document.documentElement.scrollTop;
+	console.log(scrollTop)
 	if(scrollTop<60){
 		header.css('position','relative');
+		header.show(300);
 	}else{
 		if(down){
 			if(flag==down) return
