@@ -78,22 +78,18 @@ function createPageCount(pageCount){
 	return '<li><a href="javascript:;" data-pageNum="prev">上一页</a></li>'+str+'<li><a href="javascript:;"  data-pageNum="next">下一页</a></li>';
 }
 
-var flag=false; 
 addWheel(document,function(down){
 	var scrollTop=document.body.scrollTop || document.documentElement.scrollTop;
 	console.log(scrollTop)
 	if(scrollTop<60){
+		header.show();
 		header.css('position','relative');
-		header.animate({'height':'58px','opacity':1},{duration:300});
 	}else{
 		if(down){
-			if(flag==down) return
-			flag=down;
-			header.stop().animate({'height':0,'opacity':0},{duration:300});
+			header.hide();
+			header.css('position','fixed');
 		}else{
-			if(flag==down) return
-			flag=down;
-			header.stop().animate({'height':'58px','opacity':1},{duration:300});
+			header.show();
 			header.css('position','fixed');
 		}
 		
