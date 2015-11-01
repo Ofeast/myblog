@@ -84,16 +84,16 @@ addWheel(document,function(down){
 	console.log(scrollTop)
 	if(scrollTop<60){
 		header.css('position','relative');
-		header.show(300);
+		header.animate({'height':'58px','opacity':1},{duration:300});
 	}else{
 		if(down){
 			if(flag==down) return
 			flag=down;
-			header.hide(300);
+			header.stop().animate({'height':0,'opacity':0},{duration:300});
 		}else{
 			if(flag==down) return
 			flag=down;
-			header.show(300);
+			header.stop().animate({'height':'58px','opacity':1},{duration:300});
 			header.css('position','fixed');
 		}
 		
