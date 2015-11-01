@@ -1,0 +1,33 @@
+<div class="col-md-4 right">
+	<form action="/search" role="form">
+		<div id="search" class="input-group input-group-lg">
+	      	<input type="text" name="search" class="form-control" placeholder="Search">
+	      	<span class="input-group-btn">
+	        	<input class="btn btn-default" type="submit">Go</input>
+	      	</span>
+	    </div>
+	</form>
+
+	<div id="type" class="list-group">
+	 	<span href="#" class="list-group-item active">文章分类</span>
+	 	<% for(var i=0; i<data.type.length; i++){ %>
+			<a href="/type/<%= data.type[i].url%>" class="list-group-item"><%= data.type[i].name%></a>
+	 	<% } %>
+	</div>
+
+    <div id="hot" class="list-group">
+	 	<span href="#" class="list-group-item active">热门文章</span>
+	 	<% for(var i=0; i<data.hotArticle.length; i++){ %>
+			<a href="/article/<%= data.hotArticle[i].id%>" class="list-group-item"><%= data.hotArticle[i].title%><span class="badge"><%= data.hotArticle[i].clicks%></span></a>
+	 	<% } %>
+	</div>
+
+    <div id="link" class="list-group">
+	 	<span class="list-group-item active">友情链接</span>
+	 	<% for(var i=0; i<data.links.length; i++){ %>
+			<a href="<%= data.links[i].url%>" class="list-group-item"><%= data.links[i].name%></a>
+	 	<% } %>
+	</div>
+
+</div>
+

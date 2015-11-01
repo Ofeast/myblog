@@ -1,0 +1,30 @@
+<% include header.ejs %>
+<% include navList.ejs %>
+<div class="container-fluid">
+	<div class="row-flui"></div>
+	 	<div class="col-md-8 offset1">
+			<div id="content" class="content">
+				<% if(data.list.length){ %>
+				<%	for(var i=0; i<data.list.length; i++){ %>
+						<a href="/article/<%= data.list[i].id %>" class="list-group-item">
+						<label>[<%= data.list[i].type %>]</label><%= data.list[i].title %>
+						<span class="badge"><%= data.list[i].time %></span>
+						</a>
+				<%	}  %>
+				<% } %>
+			</div>
+			<nav class="text-center">
+				<ul id="navPage" class="pagination pagination-lg">
+						<li><a href="javascript:;" data-pageNum="prev">上一页</a></li>
+					<% for(var i=1; i<=data.pageCount; i++){ %>
+						<li><a href="javascript:;"  data-pageNum="<%= i %>"><%= i %></a></li>
+					<% } %>
+						<li><a href="javascript:;"  data-pageNum="next">下一页</a></li>
+				</ul>
+			</nav>
+		</div>
+		<% include right.ejs %>
+	<div>
+</div>
+
+<% include footer.ejs %>

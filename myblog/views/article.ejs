@@ -1,0 +1,19 @@
+<% include header.ejs %>
+<% include navList.ejs %>
+
+<div class="container-fluid">
+	<div class="row-flui">
+		<div class="well text-center">
+  			<h1><%= data.article.title %></h1>
+  			<span class="label label-success"><%= data.article.type %></span>
+  			<span class="label label-success"><%= data.article.time %></span>
+  			<span class="badge label-success"><%= data.article.clicks %>次</span>
+		</div>
+		<div class="well">
+			<%- data.article.content %>
+		</div>
+	</div>
+</div>
+
+
+<% include footer.ejs %>
