@@ -24,31 +24,6 @@ navList.on('click','li',function(){
 	_this.addClass('active');
 })
 
-// navList.on('click', 'a', function(ev){
-// 	var type=$(this).html();
-// 	window.location.href='/?type='+type;
-	// $.ajax({
-	// 	url:'/getByType',
-	// 	data: {
-	// 		type:type
-	// 	},
-	// 	success: function(str){
-	// 		var data = eval('('+str+')');
-	// 		content.html(createList(data.list));
-	// 		// navPage.html(createPageCount(data.pageCount));
-	// 	}
-	// });
-	// $.ajax({
-	// 	url:'/getPageCount',
-	// 	data: {
-	// 		type:type
-	// 	},
-	// 	success: function(str){
-	// 		var data = eval('('+str+')');
-	// 		navPage.html(createPageCount(data.msg));
-	// 	}
-	// });
-// });
 
 navPage.on('click','a',function(){
 	var _this=$(this);
@@ -103,22 +78,6 @@ function createPageCount(pageCount){
 	return '<li><a href="javascript:;" data-pageNum="prev">上一页</a></li>'+str+'<li><a href="javascript:;"  data-pageNum="next">下一页</a></li>';
 }
 
-
-// searchBtn.on('click', function(){
-// 	$.ajax({
-// 		url: '/search',
-// 		data: {
-// 			search:searchBox.val()
-// 		},
-// 		success: function(str){
-// 			var list = eval('('+str+')');
-// 			var innerHTML = createList(list);
-// 			console.log(innerHTML)
-// 			content.html(innerHTML);
-// 		}
-// 	});
-// });
-// 
 var flag=false; 
 addWheel(document,function(down){
 	var scrollTop=document.body.scrollTop || document.documentElement.scrollTop;
