@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //定义cookie解析器
 app.use(cookieParser());
 //定义静态文件目录
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'),{maxAge:31557600000}));
 //匹配路径和路由
 app.use('/', routes);
 // app.use('/admin', admin);
