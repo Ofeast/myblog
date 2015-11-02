@@ -28,6 +28,10 @@ app.set('view engine', 'ejs');
 app.use(favicon(__dirname+'/public/images/favicon.ico'));
 //定义日志输出级别
 // app.use(logger('dev'));
+
+// 启用压缩
+app.use(express.compress());
+
 //定义数据解析器
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
