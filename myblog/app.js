@@ -4,7 +4,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session=require('express-session')
+var session=require('express-session');
+var compression = require('compression');
 
 //加载路由控制
 var routes = require('./routes');
@@ -30,7 +31,7 @@ app.use(favicon(__dirname+'/public/images/favicon.ico'));
 // app.use(logger('dev'));
 
 // 启用压缩
-app.use(express.compress());
+app.use(compression());
 
 //定义数据解析器
 app.use(bodyParser.json());
