@@ -35,10 +35,9 @@ module.exports={
 	},
 	getPageCount: function(params,callback){
 		pool.getConnection(function(err, connection) {
+			var sql='select ceiling(count(*)/?) as count from t_article';
 			if(params.type){
-				var sql='select ceiling(count(*)/?) as count from t_article where type=?';
-			}else{
-				var sql='select ceiling(count(*)/?) as count from t_article';
+				sql+= 'where type=?';
 			}
 			connection.query(sql, [pageSize,params.type], function(err,rows,fields){
 				callback && callback(err,rows);
@@ -75,8 +74,8 @@ module.exports={
 		})
 	},
 	getBySearch:function(params,callback){
-		pool.getConnection(function(err,connection){
-			var sql='select id,title,type,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article where title like "'+params.search+'"';
+		pool.getConnection(function(err,connection){	// %H:%i:%s
+			var sql='select id,title,type,date_format(time,"%Y-%m-%d") as time from t_article where title like "'+params.search+'"';
 			connection.query(sql,function(err,rows,fields){
 				callback && callback(err,rows);
 				connection.release();
@@ -84,13 +83,14 @@ module.exports={
 		});
 	},
 	getByType:function(params,callback){
-		pool.getConnection(function(err,connection){
+		pool.getConnection(function(err,connection){	// %H:%i:%s
+			var sql='select id,title,type,date_format(time,"%Y-%m-%d") as time from t_article';
 			if(!params.type){
-				var sql='select id,title,type,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article order by time desc';
+				sql+='order by time desc';
 			}else if(params.type=='search'){
-				var sql='select id,title,type,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article where title like "%'+params.search+'%" order by time desc';
+				sql+='where title like "%'+params.search+'%" order by time desc';
 			}else{
-				var sql='select id,title,type,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article where type=? order by time desc';
+				sql+='where type=? order by time desc';
 			}
 			connection.query(sql, [params.type], function(err,rows,fields){
 				callback && callback(err,rows);
