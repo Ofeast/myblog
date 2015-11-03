@@ -47,9 +47,9 @@ module.exports={
 		})
 	},
 	getListByPageCount: function(params,callback){
-		pool.getConnection(function(err, connection) {
+		pool.getConnection(function(err, connection) {	// %H:%i:%s
 			var start = (params.pageNum-1)*pageSize;
-			var sql='select id,title,type,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article order by time desc limit ?, ?';
+			var sql='select id,title,type,date_format(time,"%Y-%m-%d") as time from t_article order by time desc limit ?, ?';
 			connection.query(sql, [start,pageSize], function(err,rows,fields){
 				callback && callback(err,rows);
 				connection.release();
