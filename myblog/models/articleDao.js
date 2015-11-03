@@ -37,7 +37,7 @@ module.exports={
 		pool.getConnection(function(err, connection) {
 			var sql='select ceiling(count(*)/?) as count from t_article';
 			if(params.type){
-				sql+= 'where type=?';
+				sql+=' where type=?';
 			}
 			connection.query(sql, [pageSize,params.type], function(err,rows,fields){
 				callback && callback(err,rows);
@@ -86,11 +86,11 @@ module.exports={
 		pool.getConnection(function(err,connection){	// %H:%i:%s
 			var sql='select id,title,type,date_format(time,"%Y-%m-%d") as time from t_article';
 			if(!params.type){
-				sql+='order by time desc';
+				sql+=' order by time desc';
 			}else if(params.type=='search'){
-				sql+='where title like "%'+params.search+'%" order by time desc';
+				sql+=' where title like "%'+params.search+'%" order by time desc';
 			}else{
-				sql+='where type=? order by time desc';
+				sql+=' where type=? order by time desc';
 			}
 			connection.query(sql, [params.type], function(err,rows,fields){
 				callback && callback(err,rows);
