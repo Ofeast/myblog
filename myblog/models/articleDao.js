@@ -16,8 +16,8 @@ module.exports={
 		})
 	},
 	getArticleById: function(params,callback){
-		pool.getConnection(function(err, connection) {
-			var sql='select id,title,type,content,clicks,date_format(time,"%Y-%m-%d %H:%i:%s") as time from t_article where id=?';
+		pool.getConnection(function(err, connection) {	// %H:%i:%s
+			var sql='select id,title,type,content,clicks,date_format(time,"%Y-%m-%d") as time from t_article where id=?';
 			connection.query(sql, [params.id], function(err,rows,fields){
 				callback && callback(err,rows);
 				connection.release();
