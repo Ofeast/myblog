@@ -1,14 +1,14 @@
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
-server.setTimeout(360000000);
+
 var io = require('socket.io')(server);
 
 var usernames={};
 var userCount=0;
 
-server.listen(4000,function(){
-  console.log('4000 Port success!');  
+server.listen(81,function(){
+  console.log('81 Port success!');  
 });
 app.use(express.static(__dirname+'/public'))
 
