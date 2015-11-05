@@ -70,10 +70,12 @@ function sendMsg(){
 
 function setUsername(){
 	username = clearInput(inputU.val().trim());
-	if(username.length>=5){
-		alert('user name max five words!');
+	if(username.length>=6){
+		alert('user name max six words!');
+		username='';
 		return;
-	}else if(username && username!=''){
+	}
+	if(username && username!=''){
 		socket.emit('addUser', { username: username });
 	}else{
 		alert('Please input your user name ');
