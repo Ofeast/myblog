@@ -1,4 +1,6 @@
 ~function($){
+	// var URL = 'http://45.62.113.108:3001/';
+	var URL = 'http://localhost:81/';
 	var _window = $(window);
 	var inputU = $('.usernameInput');
 	var inputM = $('.inputMessage');
@@ -7,8 +9,8 @@
 	var chatArea = $('.chatArea');
 	var chatPage = $('.chat'); 
 	var loginPage = $('.login'); 
-	// var socket = io.connect('http://localhost:81');
-	var socket = io.connect('http://45.62.113.108:3001');
+	var socket = io.connect(URL);
+	
 	var username;	//用户名
 	var FADE_TIME=200; 	//200ms
 	var color=[
@@ -75,6 +77,11 @@ function setUsername(){
 function clearInput(input){
 	return $('<div/>').text(input).text();
 }
+
+
+function log(el){
+	return el.addClass('log');
+}
 // inputM.on('input',function(){
 // 	socket.emit('change',{});
 // })
@@ -106,21 +113,21 @@ function showNewMsg(data){
 //自己的登录信息
 function showLoginInfo(data){
 	var t='Welcome to Lv Xiaodong\'s chat room';
-	var welcome=$('<li class="log"/>').text(t);
+	var welcome=log($('<li/>')).text(t);
 	var userCount=createUserCount(data);
 	addMessageBody([welcome,userCount]);
 }
 
 //他人用户消息
 function showUserMsg(data){
-	var username=$('<li class="log"/>').text(data.username+' come in');
+	var username=log($('<li/>')).text(data.username+' come in');
 	var userCount=createUserCount(data);
 	addMessageBody([username,userCount]);
 }
 
 //用户离开消息
 function userLeaveMsg(data){
-	var username=$('<li class="log"/>').text(data.username+' leave');
+	var username=log($('<li/>')).text(data.username+' leave');
 	var userCount=createUserCount(data);
 	addMessageBody([username,userCount]);
 }
@@ -133,7 +140,7 @@ function showChangeMsg(data){
 }
 
 function createUserCount(data){
-	return $('<li class="log"/>').text('there are '+data.userCount+' participants');
+	return log($('<li/>')).text('there are '+data.userCount+' participants');
 }
 
 //添加到messages
@@ -176,6 +183,9 @@ socket.on('repeat',function(data){
 socket.on('leave',function(data){
 	var options={msgType:'leave'};
 	showMsg(data,options)
+});
+socket.on('reLogin',function(data){
+	window.location.href=URL;
 });
 // socket.on('change',function(data){
 // 	var options={msgType:'change'};

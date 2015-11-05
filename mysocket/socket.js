@@ -22,6 +22,10 @@ io.on('connection', function (socket) {
   var addedUser = false;
   socket.on('addUser', function (data) {
     username = data.username;
+
+    if(typeof username != 'string'){
+        username = 'name_'+new Date().getTime();
+    }
     if(usernames[username]){
       socket.emit('repeat',{
         repeat: true
@@ -34,7 +38,7 @@ io.on('connection', function (socket) {
     ++userCount;
     addedUser=true;
     socket.emit('login',{
-      username: data.username,
+      username: username,
       userCount:userCount
     });
     // socket.broadcast.emit('userCount',{
@@ -47,16 +51,23 @@ io.on('connection', function (socket) {
   });
 
   socket.on('newMsg', function (data) {
+    if(typeof data.newMsg != 'string'){
+        data.newMsg = 'name_'+new Date().getTime();
+    }
     setTimeout(function(){
       socket.flag=true;
     },1000);
-    if(socket.flag){
+    if(socket.flag && socket.username){
       socket.broadcast.emit('newMsg',{
         username:socket.username,
         newMsg:data.newMsg,
         userCount:userCount
       });
       socket.flag=false;
+    }else if(!socket.username){
+      socket.emit('reLogin',{
+        status:false
+      });
     }
   });
 
