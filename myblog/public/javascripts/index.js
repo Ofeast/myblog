@@ -78,6 +78,7 @@
 			innerHTML+='<a href="/article/'+list[i].id+'" class="list-group-item"> \
 							<label>['+list[i].type+']</label>'+list[i].title+' \
 							<span class="badge">'+list[i].time+'</span> \
+							<span class="badge">'+list[i].clicks+'</span> \
 						</a>'
 		};
 		return innerHTML;

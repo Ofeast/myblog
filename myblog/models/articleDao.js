@@ -48,7 +48,7 @@ module.exports={
 	getListByPageCount: function(params,callback){
 		pool.getConnection(function(err, connection) {	// %H:%i:%s
 			var start = (params.pageNum-1)*pageSize;
-			var sql='select id,title,type,date_format(time,"%Y-%m-%d") as time from t_article order by time desc limit ?, ?';
+			var sql='select id,title,type,clicks,date_format(time,"%Y-%m-%d") as time from t_article order by time desc limit ?, ?';
 			connection.query(sql, [start,pageSize], function(err,rows,fields){
 				callback && callback(err,rows);
 				connection.release();
@@ -75,7 +75,7 @@ module.exports={
 	},
 	getBySearch:function(params,callback){
 		pool.getConnection(function(err,connection){	// %H:%i:%s
-			var sql='select id,title,type,date_format(time,"%Y-%m-%d") as time from t_article where title like "'+params.search+'"';
+			var sql='select id,title,type,clicks,date_format(time,"%Y-%m-%d") as time from t_article where title like "'+params.search+'"';
 			connection.query(sql,function(err,rows,fields){
 				callback && callback(err,rows);
 				connection.release();
@@ -84,7 +84,7 @@ module.exports={
 	},
 	getByType:function(params,callback){
 		pool.getConnection(function(err,connection){	// %H:%i:%s
-			var sql='select id,title,type,date_format(time,"%Y-%m-%d") as time from t_article';
+			var sql='select id,title,type,clicks,date_format(time,"%Y-%m-%d") as time from t_article';
 			if(!params.type){
 				sql+=' order by time desc';
 			}else if(params.type=='search'){
