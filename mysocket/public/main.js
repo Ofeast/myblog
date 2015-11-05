@@ -1,6 +1,6 @@
 ~function($){
-	// var URL = 'http://45.62.113.108:3001/';
-	var URL = 'http://localhost:81/';
+	var URL = 'http://45.62.113.108:3001/';
+	// var URL = 'http://localhost:81/';
 	var _window = $(window);
 	var inputU = $('.usernameInput');
 	var inputM = $('.inputMessage');
@@ -50,7 +50,11 @@ function sendMsg(){
 		setTimeout(function(){
 			flag=true;
 		},1000)
-		var newMsg=clearInput(inputM.val().trim());
+		var newMsg=clearInput(inputM.val());
+		if(newMsg.length>=20){
+			alert('max twenty words!');
+			return;
+		}
 		if(newMsg!='' && newMsg.length>0){
 			inputM.val('');
 		    flag=false;
@@ -66,6 +70,10 @@ function sendMsg(){
 
 function setUsername(){
 	username = clearInput(inputU.val().trim());
+	if(username.length>=5){
+		alert('user name max five words!');
+		return;
+	}
 	if(username && username!=''){
 		socket.emit('addUser', { username: username });
 	}else{
