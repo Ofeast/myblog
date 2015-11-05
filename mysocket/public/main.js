@@ -38,9 +38,14 @@ inputU.on('keyup', function(ev){
 inputM.on('keyup', function(ev){
 	if(ev.keyCode==13){
 		var newMsg = $(this).val().trim();
-	    socket.emit('newMsg', { newMsg: newMsg});
-	    showMsg({username:username,newMsg:newMsg},{msgType:'newMsg'})
-	    inputM.val('');
+		if(newMsg!='' && newMsg.length>0){
+		    socket.emit('newMsg', { newMsg: newMsg});
+		    showMsg({username:username,newMsg:newMsg},{msgType:'newMsg'})
+		    inputM.val('');
+		}else{
+			alert('请输入用户名');
+			return;
+		}
 	}
 });
 
