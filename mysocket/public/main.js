@@ -43,7 +43,7 @@ inputM.on('keyup', function(ev){
 		    showMsg({username:username,newMsg:newMsg},{msgType:'newMsg'})
 		    inputM.val('');
 		}else{
-			alert('请输入用户名');
+			alert('消息不能为空！');
 			return;
 		}
 	}
