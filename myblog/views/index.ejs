@@ -8,7 +8,7 @@
 				<%	for(var i=0; i<data.list.length; i++){ %>
 						<a href="/article/<%= data.list[i].id %>" class="list-group-item">
 						<label>[<%= data.list[i].type %>]</label><%= data.list[i].title %>
-						<span class="badge"><%= data.list[i].time %></span>
+						<span class="badge hidden-xs"><%= data.list[i].time %></span>
 						</a>
 				<%	}  %>
 				<% } %>

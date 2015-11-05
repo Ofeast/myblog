@@ -46,6 +46,16 @@
 		getListByPageCount();
 	});
 
+	function setScrollTop(){
+		document.body.scrollTop=0;
+	}
+
+
+	function showNav(){
+		header.show();
+		header.css('position','relative');
+	}
+
 	function getListByPageCount(){
 		$.ajax({
 			url:'/getListByPageCount',
@@ -56,6 +66,8 @@
 				var list = eval('('+str+')');
 				var innerHTML = createList(list);
 				content.html(innerHTML);
+				showNav();
+				setScrollTop();
 			}
 		});
 	}
@@ -81,10 +93,8 @@
 
 	addWheel(document,function(down){
 		var scrollTop=document.body.scrollTop || document.documentElement.scrollTop;
-		console.log(scrollTop)
 		if(scrollTop<60){
-			header.show();
-			header.css('position','relative');
+			showNav();
 		}else{
 			if(down){
 				header.hide();
