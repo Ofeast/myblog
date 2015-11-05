@@ -1,6 +1,6 @@
 ~function($){
-	// var URL = 'http://45.62.113.108:3001/';
-	var URL = 'http://localhost:81/';
+	var URL = 'http://45.62.113.108:3001/';
+	// var URL = 'http://localhost:81/';
 	var _window = $(window);
 	var inputU = $('.usernameInput');
 	var inputM = $('.inputMessage');
