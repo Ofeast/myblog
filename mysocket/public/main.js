@@ -73,8 +73,7 @@ function setUsername(){
 	if(username.length>=5){
 		alert('user name max five words!');
 		return;
-	}
-	if(username && username!=''){
+	}else if(username && username!=''){
 		socket.emit('addUser', { username: username });
 	}else{
 		alert('Please input your user name ');
