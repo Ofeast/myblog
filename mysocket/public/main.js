@@ -1,6 +1,6 @@
 ~function($){
-	var URL = 'http://45.62.113.108:3001/';
-	// var URL = 'http://localhost:81/';
+	// var URL = 'http://45.62.113.108:3001/';
+	var URL = 'http://localhost:81/';
 	var _window = $(window);
 	var inputU = $('.usernameInput');
 	var inputM = $('.inputMessage');
@@ -13,6 +13,7 @@
 	
 	var username;	//用户名
 	var FADE_TIME=200; 	//200ms
+	var rnd = Math.floor(Math.random()*12);
 	var color=[
 	    '#e21400', '#91580f', '#f8a700', '#f78b00',
 	    '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
@@ -50,11 +51,7 @@ function sendMsg(){
 		setTimeout(function(){
 			flag=true;
 		},1000)
-		var newMsg=clearInput(inputM.val());
-		if(newMsg.length>=20){
-			alert('max twenty words!');
-			return;
-		}
+		var newMsg=clearInput(inputM.val().trim());
 		if(newMsg!='' && newMsg.length>0){
 			inputM.val('');
 		    flag=false;
@@ -70,11 +67,6 @@ function sendMsg(){
 
 function setUsername(){
 	username = clearInput(inputU.val().trim());
-	if(username.length>=6){
-		alert('user name max six words!');
-		username='';
-		return;
-	}
 	if(username && username!=''){
 		socket.emit('addUser', { username: username });
 	}else{
@@ -84,12 +76,13 @@ function setUsername(){
 
 
 function clearInput(input){
-	return $('<div/>').text(input).text();
+	return $('<span></span>').text(input).text();
 }
 
 
-function log(el){
-	return el.addClass('log');
+function log(message){
+	var el = $('<li></li>').addClass('log').text(message);
+	addMessageBody(el);
 }
 // inputM.on('input',function(){
 // 	socket.emit('change',{});
@@ -112,53 +105,45 @@ function showMsg(data,options){
 
 //展示发送消息
 function showNewMsg(data){
-	var username=$('<span class="username"/>').text(data.username).css('color',color[data.userCount%color.length]);
-	var messageBody=$('<span class="messageBody"/>').text(data.newMsg);
-	var el=$('<li class="message"/>').append(username,messageBody);
-	addMessageBody([el]);
+	var username=$('<span class="username"></span>').text(data.username).css('color',color[rnd]);
+	var messageBody=$('<span class="messageBody"></span>').text(data.newMsg);
+	var el=$('<li class="message"></li>').append(username,messageBody);
+	addMessageBody(el);
 }
 
 
 //自己的登录信息
 function showLoginInfo(data){
 	var t='Welcome to Lv Xiaodong\'s chat room';
-	var welcome=log($('<li/>')).text(t);
-	var userCount=createUserCount(data);
-	addMessageBody([welcome,userCount]);
+	log(t);
+	log('there are '+data.userCount+' participants');
 }
 
 //他人用户消息
 function showUserMsg(data){
-	var username=log($('<li/>')).text(data.username+' come in');
-	var userCount=createUserCount(data);
-	addMessageBody([username,userCount]);
+	log(data.username+' come in');
+	log('there are '+data.userCount+' participants');
 }
 
 //用户离开消息
 function userLeaveMsg(data){
-	var username=log($('<li/>')).text(data.username+' leave');
-	var userCount=createUserCount(data);
-	addMessageBody([username,userCount]);
+	log(data.username+' leave');
+	log('there are '+data.userCount+' participants');
 }
 
 //用户正在输入中
-function showChangeMsg(data){
-	messages.has()
-	var el=$('<li class="message"/>').text(data.username+' 正在输入...');
-	addMessageBody(el);
-}
+// function showChangeMsg(data){
+// 	messages.has()
+// 	var el=$('<li class="message"/>').text(data.username+' 正在输入...');
+// 	addMessageBody(el);
+// }
 
-function createUserCount(data){
-	return log($('<li/>')).text('there are '+data.userCount+' participants');
-}
 
 //添加到messages
-function addMessageBody(els){
-	for (var i = 0; i < els.length; i++) {
-		messages.append(els[i]);
-		els[i].hide().fadeIn(FADE_TIME);
+function addMessageBody(el){
+		messages.append(el);
+		el.hide().fadeIn(FADE_TIME);
 		setScroll();
-	};
 }
 
 function setScroll(){
