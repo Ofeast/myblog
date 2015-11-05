@@ -6,7 +6,7 @@
 	var chatArea = $('.chatArea');
 	var chatPage = $('.chat'); 
 	var loginPage = $('.login'); 
-	var socket = io.connect('http://127.0.0.1:3001');
+	var socket = io.connect('http://45.62.113.108:3001');
 	var username;	//用户名
 	var FADE_TIME=200; 	//200ms
 	var color=[
