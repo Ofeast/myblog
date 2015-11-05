@@ -5,7 +5,7 @@
 	var messages = $('.messages');
 	var chatPage = $('.chat'); 
 	var loginPage = $('.login'); 
-	var socket = io.connect('http://127.0.0.1:81');
+	var socket = io.connect('http://45.62.113.108:81');
 	var username;	//用户名
 	var FADE_TIME=200; 	//200ms
 	var color=[
