@@ -7,6 +7,7 @@ var io = require('socket.io')(server);
 var usernames={};
 var userCount=0;
 
+
 server.listen(81,function(){
   console.log('81 Port success!');  
 });
@@ -17,6 +18,7 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
+  socket.flag=true;
   var addedUser = false;
   socket.on('addUser', function (data) {
     username = data.username;
@@ -45,11 +47,17 @@ io.on('connection', function (socket) {
   });
 
   socket.on('newMsg', function (data) {
+    setTimeout(function(){
+      socket.flag=true;
+    },1000);
+    if(socket.flag){
       socket.broadcast.emit('newMsg',{
         username:socket.username,
         newMsg:data.newMsg,
         userCount:userCount
       });
+      socket.flag=false;
+    }
   });
 
   // socket.on('change', function (data) {
