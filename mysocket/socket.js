@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-  // socket.emit('news', { hello: 'world' });
+  var addedUser = false;
   socket.on('addUser', function (data) {
     username = data.username;
     if(usernames[username]){
@@ -28,28 +28,28 @@ io.on('connection', function (socket) {
     }
     
     usernames[username]=username;
+    socket.username=username;
     ++userCount;
-    socket.username=data.username;
+    addedUser=true;
     socket.emit('login',{
-      userCount:userCount,
-      status: true
+      username: data.username,
+      userCount:userCount
     });
-    socket.broadcast.emit('userCount',{
-      userCount: userCount
-    });
+    // socket.broadcast.emit('userCount',{
+    //   userCount: userCount
+    // });
     socket.broadcast.emit('addUser',{
       username: data.username,
-      userCount: userCount,
-      repeat: true
+      userCount: userCount
     });
   });
 
   socket.on('newMsg', function (data) {
-    socket.broadcast.emit('newMsg',{
-      username:socket.username,
-      newMsg:data.newMsg,
-      userCount:userCount
-    });
+      socket.broadcast.emit('newMsg',{
+        username:socket.username,
+        newMsg:data.newMsg,
+        userCount:userCount
+      });
   });
 
   // socket.on('change', function (data) {
@@ -59,15 +59,15 @@ io.on('connection', function (socket) {
   // });
 
   socket.on('disconnect', function () {
-    --userCount;
-    if (userCount<0) {
-      userCount=0;
-    };
-    delete usernames[socket.username];
+    if(addedUser){
+      --userCount;
+      delete usernames[socket.username];
 
-    socket.broadcast.emit('leave',{
-      userCount:userCount
-    });
+      socket.broadcast.emit('leave',{
+        userCount:userCount,
+        username:socket.username
+      });
+    }
   });
 
 });

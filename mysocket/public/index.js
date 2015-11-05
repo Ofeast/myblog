@@ -54,13 +54,13 @@ function showMsg(data,options){
 	}else if(options.msgType=='newMsg'){
 		showNewMsg(data);
 	}else if(options.msgType=='leave'){
-		showUserCount(data);
+		userLeaveMsg(data);
 	}else if(options.msgType=='change'){
 		showChangeMsg(data);
 	}
 
-	if(options.msgType=='userCount'){
-		showUserCount(data);
+	if(options.msgType=='login'){
+		showLoginInfo(data);
 	}
 }
 
@@ -73,22 +73,26 @@ function showNewMsg(data){
 }
 
 
-//展示用户数量
-function showUserCount(data){
-	var t='there are '+data.userCount+' participants';
-	connectCount.html(t)
+//自己的登录信息
+function showLoginInfo(data){
+	var t=$('Welcome to Lv Xiaodong\'s chat room');
+	var welcome=$('<li class="log">').text(t);
+	var userCount=$('<li class="log">').text('there are '+data.userCount+' participants');
+	addMessageBody(welcome,userCount);
 }
 
-//展示添加用户消息
+//他人用户消息
 function showUserMsg(data){
-	var el=$('<li class="log">').text(data.username+' come in');
-	addMessageBody(el);
+	var username=$('<li class="log">').text(data.username+' come in');
+	var userCount=$('<li class="log">').text('there are '+data.userCount+' participants');
+	addMessageBody(username,userCount);
 }
 
 //用户离开消息
 function userLeaveMsg(data){
-	var el=$('<li class="log">').text(data.username+' leave');
-	addMessageBody(el);
+	var username=$('<li class="log">').text(data.username+' leave');
+	var userCount=$('<li class="log">').text('there are '+data.userCount+' participants');
+	addMessageBody(username,userCount);
 }
 
 //用户正在输入中
@@ -99,9 +103,11 @@ function showChangeMsg(data){
 }
 
 //添加到messages
-function addMessageBody(el){
-	messages.append(el);
-	el.hide().fadeIn(FADE_TIME);
+function addMessageBody(els){
+	for (var i = 0; i < els.length; i++) {
+		messages.append(els[i]);
+		els[i].hide().fadeIn(FADE_TIME);
+	};
 }
 
 
@@ -116,7 +122,7 @@ socket.on('newMsg',function(data){
 });
 
 socket.on('login',function(data){
-	var options={msgType:'userCount'};
+	var options={msgType:'login'};
 	showMsg(data,options);
 	showMsgWindow();
 });
@@ -125,7 +131,8 @@ socket.on('repeat',function(data){
 	alert('名字重复了');
 });
 
-socket.on('leave',function(data){
+socket.on('user left',function(data){
+	console.log(data)
 	var options={msgType:'leave'};
 	showMsg(data,options)
 });
