@@ -1,0 +1,43 @@
+body {
+  background-color: #f2f2f2;
+}
+
+.container-fluid {
+  margin-top: 20px;
+}
+.right>div {
+  margin: 30px auto;
+}
+
+/* 导航 */
+.nav {
+  padding-left: 30px;
+  padding-right: 30px;
+  background: #fff;
+}
+.nav>li>a {
+  padding: 15px 25px;
+  font-size: 20px;
+}
+.header {
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+
+/*详情页*/
+
+.well {
+  background-color: #fff;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/*About*/
+
+.jumbotron {
+	padding-left: 30px;
+	padding-right: 30px;
+}
